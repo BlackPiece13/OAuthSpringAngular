@@ -26,25 +26,25 @@ public class UserService implements UserDetailsService {
 	@PostConstruct
 	public void createNewUsers() {
 		User user1 = new User();
-		user1.setUsername("user1");
+		user1.setFirstname("user1");
+		user1.setEmail("mail");
 		user1.setPassword(bc.encode("123"));
-		user1.setEnabled(true);
 		userRepo.save(user1);
 
 		User user2 = new User();
-		user2.setUsername("user2");
+		user2.setFirstname("user2");
+		user2.setEmail("mail1");
 		user2.setPassword(bc.encode("456"));
-		user2.setEnabled(true);
 		userRepo.save(user2);
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepo.findByUsername(username);
+		User user = userRepo.findByEmail(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("invalid user name");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+		return new org.springframework.security.core.userdetails.User(user.getFirstname(), user.getPassword(),
 				Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN")));
 	}
 }

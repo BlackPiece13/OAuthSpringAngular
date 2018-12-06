@@ -7,5 +7,11 @@ import com.dmr.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-	public User findByUsername(String username);
+	public User findByFirstname(String firstName);
+
+	public User findByFirstnameAndPassword(String username, String password);
+
+	public User findByEmailAndPassword(String email, String password);
+
+	public User findByEmail(String email);
 }

@@ -9,10 +9,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue("User")
+@DiscriminatorValue("Moderator")
 @Data
 @NoArgsConstructor
-public class User extends Person {
+public class Moderator extends Person {
 	@Enumerated(EnumType.STRING)
-	private final Role role = Role.USER;
+	private final Role role = Role.MODERATOR;
 }

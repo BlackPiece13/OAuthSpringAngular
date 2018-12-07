@@ -30,4 +30,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		endpoints.authenticationManager(authenticationManager);
 	}
 
+//	@Primary
+//	@Bean
+//	public ConsumerTokenServices tokenServices() {
+//		DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+//		defaultTokenServices.setTokenStore(tokenStore());
+//		return defaultTokenServices;
+//	}
+//
+//	@Bean
+//	public InMemoryTokenStore tokenStore() {
+//		return new InMemoryTokenStore();
+//	}
 }

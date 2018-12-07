@@ -17,7 +17,22 @@ export class LoginComponent implements OnInit {
 
       login() {
             console.log("hello");
-            this.loginService.authenticate(this.credentials, (() => { this.router.navigateByUrl('/'); }));
+            this.loginService.authenticate(this.credentials, (() => { this.router.navigateByUrl('/'); })).subscribe(response => {
+                  console.log("success");
+                  if (response['access_token']) {
+                        console.log("is authenticated");
+                        localStorage.setItem("access_token", response['access_token'])
+                        if (response ) {
+                              this.loginService.setLoggedUser(this.credentials);
+                        }
+                  } else {
+                        console.log("not authenticated");
+                        this.router.navigateByUrl('login');
+                  }
+                  this.router.navigateByUrl('/');
+            },
+                  error => {
+                        this.router.navigateByUrl('login');
+                  });
       }
-
 }

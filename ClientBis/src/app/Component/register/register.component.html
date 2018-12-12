@@ -1,0 +1,69 @@
+<div class="container">
+      <div class="col-sm-12 offset-md-3 col-md-6">
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+                  <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" [ngClass]="{'form-control':true, 'is-invalid' : (firstName.invalid && firstName.touched)}"
+                              formControlName="firstName" id="firstName" name="firstName" />
+                  </div>
+                  <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+                        <div *ngIf="firstName.errors.minlength">
+                              <p class="error text-danger">Minimum 4 caractères.</p>
+                        </div>
+                  </div>
+
+                  <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" placeholder="Last Name" [ngClass]="{'form-control':true, 'is-invalid' : (lastName.invalid && lastName.touched)}"
+                              id="lastName" name="lastName" formControlName="lastName" />
+                  </div>
+                  <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+                        <div *ngIf="lastName.errors.minlength">
+                              <p class="error text-danger">Minimum 4 caractères.</p>
+                        </div>
+                  </div>
+
+                  <div class="form-group">
+                        <label for="login">Login:</label>
+                        <input type="text" class="form-control" id="login" name="login" formControlName="login"
+                              [ngClass]="{'form-control':true, 'is-invalid' : (login.invalid && login.touched)}" />
+                  </div>
+                  <div *ngIf="login.invalid && (login.dirty || login.touched)">
+                        <div *ngIf="login.errors.minlength">
+                              <p class="error text-danger">Minimum 4 caractères.</p>
+                        </div>
+                  </div>
+
+                  <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password" formControlName="password"
+                              [ngClass]="{'form-control':true, 'is-invalid' : (password.invalid && password.touched)}" />
+                  </div>
+                  <div class="form-group">
+                        <input type="password" class="form-control" id="passwordBis" name="passwordBis" formControlName="passwordBis"
+                              [attr.disabled]=" password.invalid ? true : null" />
+                  </div>
+                  <div *ngIf="(passwordBis.invalid && (passwordBis.dirty || passwordBis.touched)) || 
+                              (password.invalid && (password.dirty || password.touched))">
+                        <div *ngIf="passwordBis.errors.minlength || password.errors.minlength">
+                              <p class="error text-danger">Mot de passe trop faible.</p>
+                        </div>
+                  </div>
+                  <div *ngIf="registerForm.errors?.passwordMatchError && !password.invalid" class="cross-validation-error-message">
+                        <p class="error text-danger">Erreur maching.</p>
+                  </div>
+
+                  <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" class="form-control" id="email" name="email" formControlName="email"
+                              [ngClass]="{'form-control':true, 'is-invalid' : (email.invalid && email.touched)}" />
+                  </div>
+                  <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <div *ngIf="email.errors.email">
+                              <p class="error text-danger">Email non valide.</p>
+                        </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </form>
+      </div>
+</div>

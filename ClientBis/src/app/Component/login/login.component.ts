@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
                   if (response['access_token']) {
                         console.log("is authenticated");
                         localStorage.setItem("access_token", response['access_token'])
-                        if (response ) {
+                        if (response) {
                               this.loginService.setLoggedUser(this.credentials);
                         }
                   } else {

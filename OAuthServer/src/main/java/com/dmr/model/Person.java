@@ -30,10 +30,13 @@ public class Person {
 	private String lastname;
 	private String email;
 	private String login;
-	
-	@JsonIgnore
+
+	@Enumerated(EnumType.STRING)
+	private Role role;
+
+	//@JsonIgnore
 	private String password;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 }

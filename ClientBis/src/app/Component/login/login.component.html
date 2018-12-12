@@ -3,7 +3,7 @@
 </div>
 
 <div class="container">
-      <div class="offset-4 col-4">
+      <div class="offset-md-3 col-md-6 col-sm-12">
             <form role="form" (ngSubmit)="login()">
                   <div class="form-group">
                         <label for="username">Username:</label> <input type="text" class="form-control" id="username"
@@ -13,7 +13,8 @@
                         <label for="password">Password:</label>
                         <input type="password" class="form-control" id="password" name="password" [(ngModel)]="credentials.password" />
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Connexion</button>
             </form>
+            <p>Si vous n'etes pas inscrit vous pouvez le faire <a href="register">ici.</a></p>
       </div>
 </div>

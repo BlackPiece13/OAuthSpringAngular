@@ -1,11 +1,11 @@
 export class User {
       private _firstName: string;
+      private _lastName: string;
       private _email: string;
       private _password: string;
       private _login: string;
       private _access_token: string;
-      private _lastName: string;
-
+      
       get login() {
             return this._login;
       }

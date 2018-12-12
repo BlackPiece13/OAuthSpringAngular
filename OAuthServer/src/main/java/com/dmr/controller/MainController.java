@@ -2,13 +2,10 @@ package com.dmr.controller;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +17,7 @@ import com.dmr.model.User;
 import com.dmr.repo.UserRepository;
 
 @RestController
-@RequestMapping("/api/private")
+@RequestMapping("/api/private/bis")
 public class MainController {
 
 	@Autowired
@@ -29,7 +26,7 @@ public class MainController {
 	private BCryptPasswordEncoder bc;
 
 //	@Resource(name = "defaultTokenServices")
-//	ConsumerTokenServices tokenServices;
+//	ConsumerTokenServices t okenServices;
 
 	@RequestMapping(value = "home", method = RequestMethod.GET, produces = MimeTypeUtils.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> home() {
@@ -56,8 +53,8 @@ public class MainController {
 
 	@GetMapping("logout")
 	public void logout(@RequestParam String access_token) {
-		System.out.println("hello logout "+access_token);
-		//tokenServices.revokeToken(access_token);
+		System.out.println("hello logout " + access_token);
+		// tokenServices.revokeToken(access_token);
 	}
 
 }

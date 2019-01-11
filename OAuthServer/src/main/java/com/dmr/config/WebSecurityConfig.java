@@ -1,5 +1,6 @@
 package com.dmr.config;
 
+import com.dmr.service.SpringAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.dmr.service.UserService;
 import com.google.common.collect.ImmutableList;
 
 @Configuration
@@ -24,7 +24,7 @@ import com.google.common.collect.ImmutableList;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UserService userService;
+	private SpringAuthService authService;
 
 	@Bean
 	public BCryptPasswordEncoder encode() {
@@ -81,7 +81,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userService).passwordEncoder(encode());
+		auth.userDetailsService(authService).passwordEncoder(encode());
 	}
-
 }

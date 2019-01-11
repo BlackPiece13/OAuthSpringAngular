@@ -4,10 +4,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.dmr.service.PersonService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -18,37 +20,47 @@ import org.springframework.web.context.WebApplicationContext;
 import com.dmr.model.Person;
 import com.dmr.model.User;
 
+import java.util.Optional;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@ContextConfiguration(classes = { JPAConfig.class})
+@AutoConfigureTestDatabase
 public class AuthenticationControllerTest {
-	@Autowired
-	private WebApplicationContext context;
-	private MockMvc mockmvc;
-	@Autowired
-	Environment env;
+    @Autowired
+    private WebApplicationContext context;
+    private MockMvc mockmvc;
+    @Autowired
+    private PersonService personService;
+    @Autowired
+    Environment env;
 
-	@Before
-	public void beforeEach() {
-		mockmvc = MockMvcBuilders.webAppContextSetup(context).build();
-	}
+    @Before
+    public void beforeEach() {
+        mockmvc = MockMvcBuilders.webAppContextSetup(context).build();
+    }
 
-	@Test
-	public void getUser() throws Exception {
-		mockmvc.perform(get("/api/private/user?login=mail&password=123")).andExpect(status().isOk());
-	}
+    @Test
+    public void getUser() throws Exception {
+        mockmvc.perform(get("/api/private/user?login=mail&password=123")).andExpect(status().isOk());
+    }
 
-	@Test
-	public void postUser() throws Exception {
-		Person userForm = new User();
-		userForm.setLogin("hamza");
-		userForm.setEmail("wind21@hotmail.fr");
-		userForm.setPassword("password");
-		mockmvc.perform(post("/api/private/user").flashAttr("user", userForm)).andExpect(status().isOk());
+    @Test
+    public void registerUser() throws Exception {
 
-		Person personBis = new User();
-		personBis.setEmail("wind21@hotmail.fr");
-		mockmvc.perform(post("/api/private/user").flashAttr("user", personBis)).andExpect(status().isBadRequest());
-	}
+        Optional<Person> foundPerson = personService.findByEmail("wind21@hotmail.fr");
+        if (foundPerson.isPresent()) {
+            personService.remove(foundPerson.get());
+        }
+
+        Person userForm = new User();
+        userForm.setLogin("hamza");
+        userForm.setEmail("wind21@hotmail.fr");
+        userForm.setPassword("password");
+
+        mockmvc.perform(post("/api/public/register").flashAttr("user", userForm)).andExpect(status().isBadRequest());
+
+        //remove the added person
+        personService.remove(personService.findByEmail("wind21@hotmail.fr").get());
+    }
 
 }

@@ -47,8 +47,8 @@ public class PersonService {
 	}
 
 	public boolean exists(Long id) {
-		Optional<Person> foundPseron = personRepo.findById(id);
-		return foundPseron.isPresent();
+		Optional<Person> foundPerson = personRepo.findById(id);
+		return foundPerson.isPresent();
 	}
 
 	public boolean exists(String email) {

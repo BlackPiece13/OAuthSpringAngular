@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import com.dmr.model.Person;
 import com.dmr.model.User;
 
-@Service("userService")
-public class UserService implements UserDetailsService {
+@Service("springAuthService")
+public class SpringAuthService implements UserDetailsService {
 	@Autowired
 	private PersonService personService;
 	@Autowired
@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<Person> user = personService.findByEmail(username);
-		if (user.isEmpty()) {
+		if (!user.isPresent()) {
 			throw new UsernameNotFoundException("invalid user name");
 		}
 		return new org.springframework.security.core.userdetails.User(user.get().getEmail(), user.get().getPassword(),

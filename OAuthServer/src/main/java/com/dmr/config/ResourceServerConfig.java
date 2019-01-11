@@ -17,3 +17,5 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		// antMatchers(HttpMethod.OPTIONS,"/oauth/token").permitAll()
 	}
 }
+
+

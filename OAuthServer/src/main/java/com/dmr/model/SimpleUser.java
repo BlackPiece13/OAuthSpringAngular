@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("User")
 @Data
 @NoArgsConstructor
-public class User extends Person {
+public class SimpleUser extends Person {
 	@Enumerated(EnumType.STRING)
-	private final Role role = Role.USER;
+	private final Role role = Role.SIMPLE_USER;
 }

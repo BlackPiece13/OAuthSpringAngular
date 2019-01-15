@@ -1,10 +1,6 @@
 package com.dmr;
 
-import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import com.dmr.model.Person;
 import com.dmr.model.SimpleUser;
 import com.dmr.service.PersonService;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -20,14 +16,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import com.dmr.model.Person;
 
 import java.util.Optional;
+
+import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureTestDatabase
-public class AuthenticationControllerTest {
+public class UserControllerTest {
     @Autowired
     private WebApplicationContext context;
     private MockMvc mockmvc;
@@ -42,26 +42,45 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    public void registerUser() throws Exception {
+    public void getUser() throws Exception {
+        Person user = new SimpleUser();
+        user.setLogin("hamza");
+        user.setEmail("mail30@mail.fr");
+        user.setPassword("password");
+        user = personService.add(user).get();
+        mockmvc.perform(get("/api/private/user?login=mail30@mail.fr&password=password")).andExpect(status().isOk());
+        personService.delete(user);
+    }
 
+    @Test
+    public void addUser() throws Exception {
+        System.out.println("Add User Test        /////////////////////");
         Optional<Person> foundPerson = personService.findByEmail("wind21@hotmail.fr");
         if (foundPerson.isPresent()) {
-            personService.delete(foundPerson.get());
+            personService.deleteById(foundPerson.get().getId());
         }
 
         Person userForm = new SimpleUser();
         userForm.setLogin("hamza");
-        userForm.setEmail("wind21@hotmail.fr");
+        userForm.setEmail("Mail50@mail.fr");
         userForm.setPassword("password");
 
         ObjectMapper mapper = new ObjectMapper();
-        mockmvc.perform(post("/api/public/register").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userForm)))
+
+        mockmvc.perform(post("/api/private/addUser").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userForm)))
                 .andExpect(status().isOk());
 
         Optional<Person> foundAddedPerson = personService.findByEmail(userForm.getEmail());
         assertTrue(foundAddedPerson.isPresent());
 
         //remove the added person
-        personService.delete(personService.findByEmail("wind21@hotmail.fr").get());
+        personService.deleteById(personService.findByEmail("Mail50@mail.fr").get().getId());
     }
 }
+
+
+
+
+
+
+

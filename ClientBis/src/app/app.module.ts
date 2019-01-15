@@ -9,6 +9,9 @@ import { LoginComponent } from './Component/login/login.component';
 import { MenuComponent } from './Component/menu/menu.component';
 import { FooterComponent } from './Component/footer/footer.component';
 import { RegisterComponent } from './Component/register/register.component';
+import { ManageUserComponent } from './manage/manage-user/manage-user.component';
+import { AuthenticateService } from './service/LoginService/authenticate.service';
+import { UserService } from './service/UserService/user.service';
 
 @NgModule({
       declarations: [
@@ -17,14 +20,15 @@ import { RegisterComponent } from './Component/register/register.component';
             LoginComponent,
             MenuComponent,
             FooterComponent,
-            RegisterComponent
+            RegisterComponent,
+            ManageUserComponent
       ],
       imports: [
             BrowserModule,
             AppRoutingModule,
             FormsModule, HttpClientModule, ReactiveFormsModule
       ],
-      providers: [],
+      providers: [ ],
       bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,8 +5,8 @@ import { User } from 'src/app/model/user';
       providedIn: 'root'
 })
 export class UserService {
-
-      constructor(private http: HttpClient) { }
+      
+      constructor(private http: HttpClient) {}
 
       register(user: User) {
             const headers = {
@@ -21,5 +21,4 @@ export class UserService {
             //JSON.stringify(user)
             return this.http.post('http://localhost:8080/api/public/register', body, { headers: headers });
       }
-
 }

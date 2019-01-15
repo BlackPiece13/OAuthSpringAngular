@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
       registerForm: FormGroup;
       condition: boolean = true;
       firstNameClass: string = "form-control";
+      emailAlreadyexists: boolean = false;
       constructor(private http: HttpClient, private userService: UserService, private router: Router) { }
 
       ngOnInit() {
@@ -50,12 +51,15 @@ export class RegisterComponent implements OnInit {
             this._credentials.login = this.registerForm.get("login").value
             this._credentials.password = this.registerForm.get("password").value
             this._credentials.email = this.registerForm.get("email").value;
-            console.log(this._credentials);
             if (!this.registerForm.get("firstName").errors && !this.registerForm.get("lastName").errors &&
                   !this.registerForm.get("login").errors && !this.registerForm.get("password").errors &&
                   !this.registerForm.get("email").errors) {
                   this.userService.register(this._credentials).subscribe(data => {
                         this.router.navigateByUrl('login');
+                  }, err => {
+                        if (err.status == 400) {
+                              this.emailAlreadyexists = true;
+                        };
                   });
             }
       }

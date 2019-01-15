@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticateService } from 'src/app/service/LoginService/authenticate.service';
+import { UserService } from 'src/app/service/UserService/user.service';
 @Component({
       selector: 'app-menu',
       templateUrl: './menu.component.html',
@@ -7,17 +8,21 @@ import { AuthenticateService } from 'src/app/service/LoginService/authenticate.s
 })
 export class MenuComponent implements OnInit {
 
-      constructor(private loginService: AuthenticateService) { }
+      constructor(private authenticateService: AuthenticateService, private userService:UserService) { }
 
       ngOnInit() {
       }
 
       get logged() {
-            return this.loginService.authenticated;
+            return this.authenticateService.authenticated;
+      }
+
+      get isAdmin () : boolean {
+            
+            return this.authenticateService.isAdmin();
       }
 
       logout() {
-            console.log("hello logout");
-            this.loginService.logout();
+            this.authenticateService.logout();
       }
 }

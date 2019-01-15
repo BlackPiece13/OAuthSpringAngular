@@ -1,50 +1,66 @@
 export class User {
-      private _firstName: string;
-      private _lastName: string;
-      private _email: string;
-      private _password: string;
-      private _login: string;
-      private _access_token: string;
-      
-      get login() {
-            return this._login;
-      }
-      set login(login: string) {
-            this._login = login;
-      }
+  private _id;
+  private _firstName: string;
+  private _lastName: string;
+  private _email: string;
+  private _password: string;
+  private _login: string;
+  private _access_token: string;
+  private _role: string;
 
-      get access_token() {
-            return this._access_token;
-      }
-      set access_token(access_token: string) {
-            this._access_token = access_token;
-      }
+  get id() {
+    return this._id;
+  }
+  set id(id: number) {
+    this._id = id;
+  }
 
-      get lastName() {
-            return this._lastName;
-      }
-      set lastName(lastName: string) {
-            this._lastName = lastName;
-      }
+  get role() {
+    return this._role;
+  }
+  set role(role: string) {
+    this._role = role;
+  }
 
-      get firstName() {
-            return this._firstName;
-      }
-      set firstName(firstName: string) {
-            this._firstName = firstName;
-      }
+  get login() {
+    return this._login;
+  }
+  set login(login: string) {
+    this._login = login;
+  }
 
-      get password() {
-            return this._password;
-      }
-      set password(password: string) {
-            this._password = password;
-      }
+  get access_token() {
+    return this._access_token;
+  }
+  set access_token(access_token: string) {
+    this._access_token = access_token;
+  }
 
-      get email() {
-            return this._email;
-      }
-      set email(email: string) {
-            this._email = email;
-      }
+  get lastName() {
+    return this._lastName;
+  }
+  set lastName(lastName: string) {
+    this._lastName = lastName;
+  }
+
+  get firstName() {
+    return this._firstName;
+  }
+  set firstName(firstName: string) {
+    this._firstName = firstName;
+  }
+
+  get password() {
+    return this._password;
+  }
+  set password(password: string) {
+    this._password = password;
+  }
+
+  get email() {
+    return this._email;
+  }
+  set email(email: string) {
+    this._email = email;
+  }
 }

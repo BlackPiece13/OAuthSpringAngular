@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Optional;
 
+import com.dmr.model.SimpleUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.dmr.model.Gender;
 import com.dmr.model.Person;
 import com.dmr.model.Role;
-import com.dmr.model.User;
 import com.dmr.service.PersonService;
 
 @RunWith(SpringRunner.class)
@@ -28,13 +28,13 @@ public class PersonServiceTest {
 
     @Test
     public void test() {
-        Person person = new User();
-        assertTrue("User with wrong role", person.getRole().compareTo(Role.USER) == 0);
+        Person person = new SimpleUser();
+        assertTrue("User with wrong role", person.getRole().compareTo(Role.SIMPLE_USER) == 0);
     }
 
     @Test
     public void addPerson() {
-        Person person = new User();
+        Person person = new SimpleUser();
         person.setEmail("mail@mail.fr");
         person.setFirstname("hamza");
         person.setGender(Gender.MALE);
@@ -43,12 +43,12 @@ public class PersonServiceTest {
         personService.add(person);
         Optional<Person> foundPerson = personService.findByEmail(person.getEmail());
         assertTrue(foundPerson.isPresent());
-        personService.remove(person);
+        personService.delete(person);
     }
 
     @Test
     public void removePerson() {
-        Person person = new User();
+        Person person = new SimpleUser();
         person.setEmail("mailBis@mail.fr");
         person.setFirstname("hamza");
         person.setGender(Gender.MALE);
@@ -57,14 +57,14 @@ public class PersonServiceTest {
         personService.add(person);
         Optional<Person> foundPerson = personService.findByEmail("mailBis@mail.fr");
         assertTrue(foundPerson.isPresent());
-        personService.remove(person);
+        personService.delete(person);
         foundPerson = personService.findByEmail("mailBis@mail.fr");
         assertTrue(!foundPerson.isPresent());
     }
 
     @Test
     public void testIfPersonExists() {
-        Person person = new User();
+        Person person = new SimpleUser();
         person.setEmail("mailBis@mail.fr");
         person.setFirstname("hamza");
         person.setGender(Gender.MALE);
@@ -74,7 +74,7 @@ public class PersonServiceTest {
 
         assertTrue(personService.exists(person.getEmail()));
 
-        personService.remove(person);
+        personService.delete(person);
 
 
         assertFalse(personService.exists(person.getEmail()));

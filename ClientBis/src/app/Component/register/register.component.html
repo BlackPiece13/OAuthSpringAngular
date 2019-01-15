@@ -63,6 +63,9 @@
                               <p class="error text-danger">Email non valide.</p>
                         </div>
                   </div>
+                  <div *ngIf="emailAlreadyexists">
+                        <p class="error text-danger">Email existe déja.</p>
+                  </div>
                   <button type="submit" class="btn btn-primary">Enregistrer</button>
             </form>
       </div>

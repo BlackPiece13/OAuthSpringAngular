@@ -16,13 +16,14 @@ export class LoginComponent implements OnInit {
       }
 
       login() {
-            console.log("hello");
             this.loginService.authenticate(this.credentials, (() => { this.router.navigateByUrl('/'); })).subscribe(response => {
                   console.log("success");
                   if (response['access_token']) {
                         console.log("is authenticated");
                         localStorage.setItem("access_token", response['access_token'])
                         if (response) {
+                              console.log("response");
+                              console.log(response);
                               this.loginService.setLoggedUser(this.credentials);
                         }
                   } else {

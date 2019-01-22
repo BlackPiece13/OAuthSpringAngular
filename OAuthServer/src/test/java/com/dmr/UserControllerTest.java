@@ -48,13 +48,12 @@ public class UserControllerTest {
         user.setEmail("mail30@mail.fr");
         user.setPassword("password");
         user = personService.add(user).get();
-        mockmvc.perform(get("/api/private/user?login=mail30@mail.fr&password=password")).andExpect(status().isOk());
+        mockmvc.perform(get("/api/private/user?email=mail30@mail.fr")).andExpect(status().isOk());
         personService.delete(user);
     }
 
     @Test
     public void addUser() throws Exception {
-        System.out.println("Add User Test        /////////////////////");
         Optional<Person> foundPerson = personService.findByEmail("wind21@hotmail.fr");
         if (foundPerson.isPresent()) {
             personService.deleteById(foundPerson.get().getId());
@@ -66,7 +65,6 @@ public class UserControllerTest {
         userForm.setPassword("password");
 
         ObjectMapper mapper = new ObjectMapper();
-
         mockmvc.perform(post("/api/private/addUser").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userForm)))
                 .andExpect(status().isOk());
 

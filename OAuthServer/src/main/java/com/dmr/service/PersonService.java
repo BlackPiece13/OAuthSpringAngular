@@ -5,8 +5,6 @@ import java.util.Optional;
 
 import com.dmr.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +42,10 @@ public class PersonService {
         return personRepo.findByEmail(email);
     }
 
+    public Optional<Person> findByID(Long id) {
+        return personRepo.findById(id);
+    }
+
     public Optional<Person> add(Person person) {
 
         Optional<Person> foundPerson = findByEmail(person.getEmail());
@@ -56,7 +58,16 @@ public class PersonService {
     }
 
     public Optional<Person> update(Person person) {
-        return Optional.ofNullable(personRepo.save(person));
+        Optional<Person> entityToUpdate = personRepo.findById(person.getId());
+
+        entityToUpdate.get().setFirstname(person.getFirstname());
+        entityToUpdate.get().setLastname(person.getLastname());
+        entityToUpdate.get().setLogin(person.getLogin());
+        entityToUpdate.get().setEmail(person.getEmail());
+        entityToUpdate.get().setGender(person.getGender());
+        entityToUpdate.get().setRole(person.getRole());
+
+        return Optional.ofNullable(personRepo.save(entityToUpdate.get()));
     }
 
     public void delete(Person person) {
@@ -78,8 +89,7 @@ public class PersonService {
     }
 
     public UserDTO getUserDTO(Person person) {
-        return UserDTO.builder().id(person.getId()).firstname(person.getFirstname()).
-                lastname(person.getLastname()).email(person.getEmail()).gender(person.getGender()).
-                login(person.getLogin()).role(person.getRole()).build();
+        return UserDTO.builder().id(person.getId()).firstname(person.getFirstname()).lastname(person.getLastname()).
+                role(person.getRole()).login(person.getLogin()).gender(person.getGender()).email(person.getEmail()).build();
     }
 }

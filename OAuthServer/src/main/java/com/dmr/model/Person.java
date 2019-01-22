@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@JsonIgnore
 	private Long id;
 
 	private String firstname;

@@ -36,8 +36,6 @@
     </form>
 
     <ul class="navbar-nav">
-
-
       <div *ngIf="!logged">
         <li class="nav-item">
           <a class="navbar-link" href="login"><button class="btn btn-outline-success my-2 my-sm-0">
@@ -47,12 +45,6 @@
 
       <div *ngIf="logged">
         <div *ngIf="isAdmin">
-          <li class="nav-item">
-            <a class="navbar-link" href="manageUser"><button class="btn btn-outline-success my-2 my-sm-0">
-                Utilisateur</button>
-            </a></li>
-
-
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
@@ -67,11 +59,6 @@
             </div>
           </li>
         </div>
-
-
-
-
-
         <li class="nav-item">
           <button class="btn btn-outline-success my-2 my-sm-0" (click)="logout();">
             Deconnexion</button>

@@ -1,4 +1,4 @@
-	package com.dmr.config;
+package com.dmr.config;
 
 import java.io.IOException;
 
@@ -19,41 +19,41 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class RestConfig implements Filter {
 
-	public RestConfig() {
-	}
+    public RestConfig() {
+    }
 
-	@Override
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-			throws IOException, ServletException {
-		HttpServletResponse response = (HttpServletResponse) res;
-		HttpServletRequest request = (HttpServletRequest) req;
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-		response.setHeader("Access-Control-Max-Age", "3600");
-		response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, content-type");
-		
-		if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-			response.setStatus(HttpServletResponse.SC_OK);
-		} else {
-			chain.doFilter(req, res);
-		}
-	}
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletResponse response = (HttpServletResponse) res;
+        HttpServletRequest request = (HttpServletRequest) req;
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "36000");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, content-type");
 
-	@Override
-	public void init(FilterConfig filterConfig) {
-		
-	}
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            chain.doFilter(req, res);
+        }
+    }
 
-	@Override
-	public void destroy() {
-	}
+    @Override
+    public void init(FilterConfig filterConfig) {
+
+    }
+
+    @Override
+    public void destroy() {
+    }
 }
 
 /*
  * @Configuration public class RestConfig {
- * 
+ *
  * @Bean
- * 
+ *
  * @Primary public CorsFilter corsFilter() { UrlBasedCorsConfigurationSource
  * source = new UrlBasedCorsConfigurationSource(); CorsConfiguration config =
  * new CorsConfiguration(); //config.setAllowCredentials(false);

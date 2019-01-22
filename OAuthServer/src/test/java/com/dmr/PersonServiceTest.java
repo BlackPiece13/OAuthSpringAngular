@@ -1,8 +1,10 @@
 package com.dmr;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.dmr.model.SimpleUser;
@@ -79,5 +81,33 @@ public class PersonServiceTest {
 
         assertFalse(personService.exists(person.getEmail()));
     }
+
+    @Test
+    public void findAll() {
+        // j'ai deja enregistre trois utilisateurs
+
+
+        List<Person> personsList = personService.findAll();
+        assertTrue(personsList.size() == 3);
+    }
+
+    @Test
+    public void updateUser() {
+        Person user = new SimpleUser();
+        user.setFirstname("aouadene");
+        user.setLastname("hamza");
+        user.setEmail("atom@mail.fr");
+        user.setPassword("password");
+        Optional<Person> addedUser = personService.add(user);
+
+        user.setFirstname("haddadi");
+        personService.update(user);
+
+        Optional<Person> updatedUser = personService.findByEmail("atom@mail.fr");
+        assertEquals(updatedUser.get().getFirstname(), "haddadi");
+
+        personService.delete(addedUser.get());
+    }
+
 
 }

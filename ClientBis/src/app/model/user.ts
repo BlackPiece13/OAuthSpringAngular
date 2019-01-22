@@ -1,18 +1,26 @@
 export class User {
   private _id;
-  private _firstName: string;
-  private _lastName: string;
+  private _firstname: string;
+  private _lastname: string;
   private _email: string;
   private _password: string;
   private _login: string;
   private _access_token: string;
   private _role: string;
+  private _gender :string;
 
   get id() {
     return this._id;
   }
   set id(id: number) {
     this._id = id;
+  }
+
+  get gender() {
+    return this._gender;
+  }
+  set gender(gender: string) {
+    this._gender =gender;
   }
 
   get role() {
@@ -36,18 +44,18 @@ export class User {
     this._access_token = access_token;
   }
 
-  get lastName() {
-    return this._lastName;
+  get lastname() {
+    return this._lastname;
   }
-  set lastName(lastName: string) {
-    this._lastName = lastName;
+  set lastname(lastname: string) {
+    this._lastname = lastname;
   }
 
-  get firstName() {
-    return this._firstName;
+  get firstname() {
+    return this._firstname;
   }
-  set firstName(firstName: string) {
-    this._firstName = firstName;
+  set firstname(firstname: string) {
+    this._firstname = firstname;
   }
 
   get password() {

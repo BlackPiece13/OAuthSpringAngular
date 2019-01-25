@@ -1,12 +1,11 @@
 package com.dmr;
 
 import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.dmr.model.SimpleUser;
-import com.dmr.service.PersonService;
+import com.dmr.model.User;
+import com.dmr.service.UserService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +19,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import com.dmr.model.Person;
 
 import java.util.Optional;
 
@@ -32,7 +30,7 @@ public class AuthenticationControllerTest {
     private WebApplicationContext context;
     private MockMvc mockmvc;
     @Autowired
-    private PersonService personService;
+    private UserService userService;
     @Autowired
     Environment env;
 
@@ -44,12 +42,12 @@ public class AuthenticationControllerTest {
     @Test
     public void registerUser() throws Exception {
 
-        Optional<Person> foundPerson = personService.findByEmail("wind21@hotmail.fr");
+        Optional<User> foundPerson = userService.findByEmail("wind21@hotmail.fr");
         if (foundPerson.isPresent()) {
-            personService.delete(foundPerson.get());
+            userService.delete(foundPerson.get());
         }
 
-        Person userForm = new SimpleUser();
+        User userForm = new User();
         userForm.setLogin("hamza");
         userForm.setEmail("wind21@hotmail.fr");
         userForm.setPassword("password");
@@ -58,10 +56,10 @@ public class AuthenticationControllerTest {
         mockmvc.perform(post("/api/public/register").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(userForm)))
                 .andExpect(status().isOk());
 
-        Optional<Person> foundAddedPerson = personService.findByEmail(userForm.getEmail());
+        Optional<User> foundAddedPerson = userService.findByEmail(userForm.getEmail());
         assertTrue(foundAddedPerson.isPresent());
 
         //remove the added person
-        personService.delete(personService.findByEmail("wind21@hotmail.fr").get());
+        userService.delete(userService.findByEmail("wind21@hotmail.fr").get());
     }
 }

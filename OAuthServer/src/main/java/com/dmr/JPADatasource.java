@@ -1,4 +1,4 @@
-package com.dmr.config;
+package com.dmr;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -23,8 +23,24 @@ import javax.sql.DataSource;
         basePackages = {"com.dmr.repo"}
 )
 public class JPADatasource {
+    /*
+    @Bean
     @Primary
-    @Bean(name = "dataSource")
+    @ConfigurationProperties("spring.datasource")
+    public DataSourceProperties firstDataSourceProperties() {
+        return new DataSourceProperties();
+    }
+
+    @Bean
+    @Primary
+    @ConfigurationProperties("spring.datasource.configuration")
+    public HikariDataSource firstDataSource() {
+        return firstDataSourceProperties().initializeDataSourceBuilder()
+                .type(HikariDataSource.class).build();
+    }*/
+
+    @Primary
+    @Bean(name = "mainDatasource")
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
@@ -35,12 +51,11 @@ public class JPADatasource {
     public LocalContainerEntityManagerFactoryBean
     entityManagerFactory(
             EntityManagerFactoryBuilder builder,
-            @Qualifier("dataSource") DataSource dataSource
+            @Qualifier("mainDatasource") DataSource dataSource
     ) {
         return builder
-                .dataSource(dataSource)
-                .packages("com.dmr.model")
-                .persistenceUnit("foo")
+                .dataSource(dataSource).packages("com.dmr.model")
+                .persistenceUnit("mainDatasourcePU")
                 .build();
     }
 

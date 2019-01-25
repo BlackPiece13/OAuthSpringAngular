@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dmr.dto.UserDTO;
-import com.dmr.model.Person;
-import com.dmr.service.PersonService;
+import com.dmr.model.User;
+import com.dmr.service.UserService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private PersonService personService;
+    private UserService userService;
 
 /*
 @Resource(name = "defaultTokenServices")
@@ -28,60 +28,60 @@ ConsumerTokenServices tokenServices;
 
     @RequestMapping(value = "/user", method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> getUser(@RequestParam String email) {
-        Optional<Person> foundPerson = personService.findByEmail(email);
+        Optional<User> foundPerson = userService.findByEmail(email);
         if (!foundPerson.isPresent()) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        UserDTO userDTO = personService.getUserDTO(foundPerson.get());
+        UserDTO userDTO = userService.getUserDTO(foundPerson.get());
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> getUserByID(@PathVariable("id") Long id) {
-        Optional<Person> foundPerson = personService.findByID(id);
+        Optional<User> foundPerson = userService.findByID(id);
         if (!foundPerson.isPresent()) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        UserDTO userDTO = personService.getUserDTO(foundPerson.get());
+        UserDTO userDTO = userService.getUserDTO(foundPerson.get());
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/allUsers", method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<Person> allPersons = personService.findAll();
+        List<User> allPersons = userService.findAll();
 
         List<UserDTO> usersDTOList = new ArrayList<>();
-        for (Person person : allPersons) {
-            usersDTOList.add(personService.getUserDTO(person));
+        for (User person : allPersons) {
+            usersDTOList.add(userService.getUserDTO(person));
         }
         return new ResponseEntity<>(usersDTOList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity deleteUser(@PathVariable("id") String id) {
-        personService.deleteById(Long.parseLong(id));
+        userService.deleteById(Long.parseLong(id));
         ResponseEntity response = new ResponseEntity(HttpStatus.OK);
         return response;
     }
 
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> updateUser(@RequestBody Person user) {
-        if (!personService.update(user).isPresent()) {
+    public ResponseEntity<UserDTO> updateUser(@RequestBody User user) {
+        if (!userService.update(user).isPresent()) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
-            return new ResponseEntity<>(personService.getUserDTO(user), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getUserDTO(user), HttpStatus.OK);
         }
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> addUser(@RequestBody Person user) {
+    public ResponseEntity<UserDTO> addUser(@RequestBody User user) {
         ObjectMapper mapper = new ObjectMapper();
         ResponseEntity<UserDTO> resp;
-        Optional<Person> foundUser = personService.findByEmail(user.getEmail());
+        Optional<User> foundUser = userService.findByEmail(user.getEmail());
         if (foundUser.isPresent()) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        UserDTO userDTO = personService.getUserDTO(personService.add(user).get());
+        UserDTO userDTO = userService.getUserDTO(userService.add(user).get());
         return new ResponseEntity(userDTO, HttpStatus.OK);
     }
 }

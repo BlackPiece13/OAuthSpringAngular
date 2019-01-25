@@ -6,9 +6,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="TYPE_ENTITY")
-@DiscriminatorValue("MEDIA")
 @Data
 @NoArgsConstructor
 public class Media {
@@ -19,7 +16,14 @@ public class Media {
 
     private String title;
     private String description;
+    private String url;
 
     @OneToOne
     private Photo photo;
+
+    @Enumerated(EnumType.STRING)
+    private MediaType type;
+
+    @Lob
+    private String content;
 }

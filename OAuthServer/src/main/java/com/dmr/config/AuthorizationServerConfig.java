@@ -1,13 +1,13 @@
 package com.dmr.config;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.core.annotation.Order;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -32,11 +32,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     @Lazy
     private TokenStore tokenStore;
-
     @Autowired
     @Qualifier("tokenDataSource")
     private DataSource tokenDataSource;
-
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -47,7 +45,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager);
+        endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore);
     }
 
     @Bean
@@ -57,22 +55,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return defaultTokenServices;
     }
 
-
     @Bean
     public TokenStore tokenStore() {
         return new JdbcTokenStore(tokenDataSource);
     }
 
-
     @Bean(name = "tokenDataSource")
-    public DataSource tokenDataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.hibernate.dialect.MySQL5Dialect");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/oauth2Token?serverTimezone=UTC");
-        dataSource.setUsername("admin");
-        dataSource.setPassword("admin");
-
-        return dataSource;
+    @ConfigurationProperties("token.datasource")
+    public HikariDataSource dataSource() {
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
-
 }

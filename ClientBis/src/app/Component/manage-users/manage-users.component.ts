@@ -46,7 +46,6 @@ export class ManageUsersComponent implements OnInit {
       'gender': new FormControl(this._credentials.gender,
         [Validators.required])
     }, { validators: this.passwordsMatch });
-
   }
 
   deleteUser(id: number) {

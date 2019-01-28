@@ -1,8 +1,15 @@
-#footer {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      height: 65px;
-      background: #77c9b4;
+.footer {
+    box-sizing: content-box;
+    margin: 0 -15px;
+    background: #444;
+    padding-top: 5px;
+    width: 100%;
+    text-align: center;
+    height: 30px;
+    position: absolute;
+    bottom: 0;
+}
+
+.footer p {
+    margin-bottom: 0;
 }

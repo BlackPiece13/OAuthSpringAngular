@@ -33,6 +33,8 @@ export class AuthenticateService implements OnDestroy {
     this.http.get('http://localhost:8080/api/private/user?email=' + credentials.email +
       "&access_token=" + localStorage.getItem("access_token"))
       .subscribe(resp => {
+        console.log("response to setlogger");
+        console.log(resp);
         localStorage.setItem("firstname", resp["firstname"]);
         localStorage.setItem("lastname", resp["lastname"]);
         localStorage.setItem("email", resp["email"]);
@@ -42,7 +44,7 @@ export class AuthenticateService implements OnDestroy {
       });
   }
   logout() {
-    this.http.get('http://localhost:8080/api/public/logout&access_token='
+    this.http.get('http://localhost:8080/api/public/logout&token='
       + localStorage.getItem("access_token"), {}).
       pipe(finalize(() => {
         this.router.navigateByUrl('');

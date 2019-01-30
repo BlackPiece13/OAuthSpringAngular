@@ -1,10 +1,7 @@
 package com.dmr.config;
 
-import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -33,14 +30,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Lazy
     private TokenStore tokenStore;
     @Autowired
-    @Qualifier("tokenDataSource")
+    @Qualifier("tokenDatasource")
     private DataSource tokenDataSource;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory().withClient("myapp").secret(bc.encode("secret"))
                 .authorizedGrantTypes("password", "refresh_token").scopes("read", "write")
-                .accessTokenValiditySeconds(100 * 60).refreshTokenValiditySeconds(100 * 60);
+                .accessTokenValiditySeconds(100 * 40).refreshTokenValiditySeconds(100 * 30);
     }
 
     @Override
@@ -59,10 +56,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public TokenStore tokenStore() {
         return new JdbcTokenStore(tokenDataSource);
     }
-
+/*
     @Bean(name = "tokenDataSource")
     @ConfigurationProperties("token.datasource")
     public HikariDataSource dataSource() {
         return DataSourceBuilder.create().type(HikariDataSource.class).build();
-    }
+    }*/
 }

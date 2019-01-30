@@ -1,29 +1,18 @@
-package com.dmr;
+package com.dmr.config;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(
-        entityManagerFactoryRef = "entityManagerFactory",
-        basePackages = {"com.dmr.repo"}
-)
+//@EnableJpaRepositories(entityManagerFactoryRef = "entityManagerFactory", basePackages = {"com.dmr.repo"})
 public class JPADatasource {
-    /*
+
     @Bean
     @Primary
     @ConfigurationProperties("spring.datasource")
@@ -37,8 +26,22 @@ public class JPADatasource {
     public HikariDataSource firstDataSource() {
         return firstDataSourceProperties().initializeDataSourceBuilder()
                 .type(HikariDataSource.class).build();
-    }*/
+    }
 
+    @Bean
+    @ConfigurationProperties("token.datasource")
+    public DataSourceProperties secondDataSourceProperties() {
+        return new DataSourceProperties();
+    }
+
+
+    @Bean("tokenDatasource")
+    @ConfigurationProperties("spring.datasource.configuration")
+    public HikariDataSource secondDataSource() {
+        return secondDataSourceProperties().initializeDataSourceBuilder()
+                .type(HikariDataSource.class).build();
+    }
+/*
     @Primary
     @Bean(name = "mainDatasource")
     @ConfigurationProperties(prefix = "spring.datasource")
@@ -53,9 +56,8 @@ public class JPADatasource {
             EntityManagerFactoryBuilder builder,
             @Qualifier("mainDatasource") DataSource dataSource
     ) {
-        return builder
-                .dataSource(dataSource).packages("com.dmr.model")
-                .persistenceUnit("mainDatasourcePU")
+        return builder.dataSource(dataSource).persistenceUnit("mainPU")
+                .packages("com.dmr.model")
                 .build();
     }
 
@@ -66,5 +68,5 @@ public class JPADatasource {
                     entityManagerFactory
     ) {
         return new JpaTransactionManager(entityManagerFactory);
-    }
+    }*/
 }

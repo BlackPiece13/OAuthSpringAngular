@@ -77,7 +77,7 @@ ConsumerTokenServices tokenServices;
     public ResponseEntity<UserDTO> addUser(@RequestBody User user) {
         ObjectMapper mapper = new ObjectMapper();
         ResponseEntity<UserDTO> resp;
-        Optional<User> foundUser = userService.findByEmail(user.getEmail());
+        Optional<User>  foundUser = userService.findByEmail(user.getEmail());
         if (foundUser.isPresent()) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }

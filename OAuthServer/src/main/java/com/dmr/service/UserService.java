@@ -3,6 +3,7 @@ package com.dmr.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.dmr.com.dmr.exceptions.UserAlreadyExistsException;
 import com.dmr.dto.UserDTO;
 import com.dmr.model.User;
 import com.dmr.repo.UserRepository;
@@ -45,11 +46,11 @@ public class UserService {
         return userRepo.findById(id);
     }
 
-    public Optional<User> add(User user) {
+    public Optional<User> add(User user) throws UserAlreadyExistsException {
 
         Optional<User> foundPerson = findByEmail(user.getEmail());
         if (foundPerson.isPresent()) {
-            return Optional.ofNullable(null);
+            throw new UserAlreadyExistsException("User already exists");
         }
         user.setPassword(bc.encode(user.getPassword()));
         return Optional.ofNullable(userRepo.save(user));

@@ -11,6 +11,7 @@ import { FooterComponent } from './Component/footer/footer.component';
 import { RegisterComponent } from './Component/register/register.component';
 import { ManageUsersComponent } from './Component/manage-users/manage-users.component';
 import { ErrorsHandlerService } from './service/Exceptions/errors-handler.service';
+import { ManageAudioComponent } from './Component/manage-audio/manage-audio.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ErrorsHandlerService } from './service/Exceptions/errors-handler.servic
     MenuComponent,
     FooterComponent,
     RegisterComponent,
-    ManageUsersComponent
+    ManageUsersComponent,
+    ManageAudioComponent
   ],
   imports: [
     BrowserModule,

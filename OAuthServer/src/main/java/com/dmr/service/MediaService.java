@@ -1,13 +1,17 @@
 package com.dmr.service;
 
+import com.dmr.com.dmr.exceptions.AlreadyExistsMediaException;
 import com.dmr.model.Media;
 import com.dmr.model.MediaType;
 import com.dmr.repo.MediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MediaService {
@@ -34,7 +38,10 @@ public class MediaService {
         mediaRepo.delete(media);
     }
 
-    public void add(Media media) {
+    public void add(Media media) throws AlreadyExistsMediaException {
+        if (mediaRepo.findByUrlAndType(media.getUrl(), media.getType()).isPresent()) {
+            throw new AlreadyExistsMediaException("Media already exists");
+        }
         mediaRepo.save(media);
     }
 

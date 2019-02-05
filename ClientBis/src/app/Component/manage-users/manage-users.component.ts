@@ -23,10 +23,10 @@ export class ManageUsersComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this._credentials = new User();
     this.userService.getAllUsers().subscribe(res => {
       this.usersList = res;
     });
-    this._credentials = new User();
     this.formGroup = new FormGroup({
       'firstname': new FormControl(this._credentials.firstname,
         [Validators.required]

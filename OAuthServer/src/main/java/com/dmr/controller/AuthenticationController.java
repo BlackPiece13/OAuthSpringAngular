@@ -4,6 +4,7 @@ import com.dmr.com.dmr.exceptions.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +29,13 @@ public class AuthenticationController {
 
     @GetMapping("/api/public/logout")
     public ResponseEntity logout(@RequestParam String token) {
-        System.out.println("hello logout " + token);
-        tokenServices.getClientId(token);
-        tokenServices.revokeToken(token);
-        return new ResponseEntity(HttpStatus.OK);
+        try {
+            tokenServices.revokeToken(token);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(value = "/api/public/register", method = RequestMethod.POST, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -41,7 +45,6 @@ public class AuthenticationController {
         try {
             userService.add(user);
             System.out.println("user already exists !!!");
-
         } catch (UserAlreadyExistsException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

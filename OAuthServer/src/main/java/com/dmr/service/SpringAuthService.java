@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
+import com.dmr.com.dmr.exceptions.UserAlreadyExistsException;
 import com.dmr.model.Role;
 import com.dmr.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,21 +29,27 @@ public class SpringAuthService implements UserDetailsService {
         user1.setFirstname("user1");
         user1.setEmail("mail");
         user1.setPassword("123");
-        userService.add(user1);
+
 
         User user2 = new User();
         user2.setRole(Role.SIMPLE_USER);
         user2.setFirstname("user2");
         user2.setEmail("mail1");
         user2.setPassword("456");
-        userService.add(user2);
+
 
         User admin = new User();
         admin.setRole(Role.ADMIN);
         admin.setFirstname("admin");
         admin.setEmail("mail3@mail.fr");
         admin.setPassword("123");
-        userService.add(admin);
+        try {
+            userService.add(user1);
+            userService.add(user2);
+            userService.add(admin);
+        } catch (UserAlreadyExistsException e) {
+
+        }
     }
 
     @Override

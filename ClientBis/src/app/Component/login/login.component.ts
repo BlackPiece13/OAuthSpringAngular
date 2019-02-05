@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
   constructor(private loginService: AuthenticateService, private router: Router) { }
 
   login() {
-    console.log(this.credentials);
     this.loginService.authenticate(this.credentials, (() => { this.router.navigateByUrl('/'); })).subscribe(response => {
       console.log("success");
       if (response['access_token']) {

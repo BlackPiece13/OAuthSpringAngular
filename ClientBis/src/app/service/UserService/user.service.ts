@@ -18,7 +18,6 @@ export class UserService {
       firstName: user.firstname, lastName: user.lastname, password: user.password,
       email: user.email, login: user.login
     };
-    console.log(body);
     //JSON.stringify(user)
     return this.http.post('http://localhost:8080/api/public/register', body, { headers: headers });
   }
@@ -44,8 +43,6 @@ export class UserService {
       id: user.id, firstname: user.firstname, lastname: user.lastname,
       email: user.email, login: user.login, role: user.role, gender: user.gender
     };
-    console.log("update service id  " + user.id);
-    console.log("update service id body  " + body['id']);
     return this.http.post('http://localhost:8080/api/private/updateUser?access_token='
       + localStorage.getItem('access_token'), body, { headers: headers });
   }
@@ -55,7 +52,6 @@ export class UserService {
   }
 
   delete(id: number) {
-    console.log("user service " + id);
     return this.http.get('http://localhost:8080/api/private/deleteUser/' + id + '?access_token=' + localStorage.getItem("access_token"));
   }
 

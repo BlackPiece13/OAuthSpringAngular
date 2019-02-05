@@ -1,10 +1,15 @@
 package com.dmr;
 
+import com.dmr.com.dmr.exceptions.UserAlreadyExistsException;
 import com.dmr.model.Gender;
 import com.dmr.model.User;
 import com.dmr.service.UserService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,11 +22,15 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureTestDatabase
 public class UserServiceTest {
 
     @Autowired
     private UserService userService;
+
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void addPerson() {
@@ -82,6 +91,7 @@ public class UserServiceTest {
         // j'ai deja enregistre trois utilisateurs
         List<User> personsList = userService.findAll();
         assertTrue(personsList.size() == 3);
+
     }
 
     @Test
@@ -91,15 +101,19 @@ public class UserServiceTest {
         user.setLastname("hamza");
         user.setEmail("atom@mail.fr");
         user.setPassword("password");
-        Optional<User> addedUser = userService.add(user);
 
-        user.setFirstname("haddadi");
-        userService.update(user);
+        try {
+            Optional<User> addedUser = userService.add(user);
+            user.setFirstname("haddadi");
+            userService.update(user);
 
-        Optional<User> updatedUser = userService.findByEmail("atom@mail.fr");
-        assertEquals(updatedUser.get().getFirstname(), "haddadi");
+            Optional<User> updatedUser = userService.findByEmail("atom@mail.fr");
+            assertEquals(updatedUser.get().getFirstname(), "haddadi");
 
-        userService.delete(addedUser.get());
+            userService.delete(addedUser.get());
+        } catch (UserAlreadyExistsException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -35,22 +35,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/register").permitAll();
 	}
-	/*
-	 * @Bean public FilterRegistrationBean corsFilter() {
-	 * UrlBasedCorsConfigurationSource source = new
-	 * UrlBasedCorsConfigurationSource(); CorsConfiguration config = new
-	 * CorsConfiguration(); config.setAllowCredentials(true);
-	 * config.addAllowedOrigin("http://localhost:4200");
-	 * config.addAllowedHeader("*"); config.addAllowedMethod("*");
-	 * source.registerCorsConfiguration("/**", config); FilterRegistrationBean bean
-	 * = new FilterRegistrationBean(new CorsFilter(source)); bean.setOrder(0);
-	 * return bean; }
-	 */
-
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		final CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(ImmutableList.of("*"));
+		configuration.setAllowedOrigins(ImmutableList.of("http://localhost:4200"));
 		configuration.setAllowedMethods(ImmutableList.of("HEAD", "POST"));// , "GET", "POST", "PUT", "DELETE", "PATCH"
 		// setAllowCredentials(true) is important, otherwise:
 		// The value of the 'Access-Control-Allow-Origin' header in the response must
@@ -63,15 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-	/*
-	 * @Bean CorsConfigurationSource corsConfigurationSource() { CorsConfiguration
-	 * configuration = new CorsConfiguration();
-	 * configuration.setAllowedOrigins(Arrays.asList("*"));
-	 * configuration.addAllowedHeader("*"); configuration.addAllowedMethod("*");
-	 * configuration.setAllowCredentials(true); UrlBasedCorsConfigurationSource
-	 * source = new UrlBasedCorsConfigurationSource();
-	 * source.registerCorsConfiguration("/**", configuration); return source; }
-	 */
 
 	@Override
 	@Bean

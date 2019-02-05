@@ -41,7 +41,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints){
         endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore);
     }
 
@@ -56,10 +56,4 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public TokenStore tokenStore() {
         return new JdbcTokenStore(tokenDataSource);
     }
-/*
-    @Bean(name = "tokenDataSource")
-    @ConfigurationProperties("token.datasource")
-    public HikariDataSource dataSource() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
-    }*/
 }

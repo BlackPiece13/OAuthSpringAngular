@@ -28,13 +28,9 @@ export class AuthenticateService implements OnDestroy {
   }
 
   setLoggedUser(credentials: User) {
-    console.log("email");
-    console.log(credentials.email);
     this.http.get('http://localhost:8080/api/private/user?email=' + credentials.email +
       "&access_token=" + localStorage.getItem("access_token"))
       .subscribe(resp => {
-        console.log("response to setlogger");
-        console.log(resp);
         localStorage.setItem("firstname", resp["firstname"]);
         localStorage.setItem("lastname", resp["lastname"]);
         localStorage.setItem("email", resp["email"]);

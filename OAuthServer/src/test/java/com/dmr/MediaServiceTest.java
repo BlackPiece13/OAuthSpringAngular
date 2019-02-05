@@ -1,6 +1,7 @@
 package com.dmr;
 
 
+import com.dmr.com.dmr.exceptions.AlreadyExistsMediaException;
 import com.dmr.model.Media;
 import com.dmr.model.MediaType;
 import com.dmr.service.MediaService;
@@ -26,9 +27,13 @@ public class MediaServiceTest {
         Media media = new Media();
         media.setTitle("article de presse");
         media.setType(MediaType.AUDIO);
-        mediaService.add(media);
-        assertTrue(mediaService.findAll().get().size() == 1);
-        mediaService.delete(media);
-        assertTrue(mediaService.findAll().get().size() == 0);
+        try {
+            mediaService.add(media);
+            assertTrue(mediaService.findAll().get().size() == 1);
+            mediaService.delete(media);
+            assertTrue(mediaService.findAll().get().size() == 0);
+        } catch (AlreadyExistsMediaException e) {
+            e.printStackTrace();
+        }
     }
 }

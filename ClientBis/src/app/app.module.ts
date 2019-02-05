@@ -11,7 +11,7 @@ import { FooterComponent } from './Component/footer/footer.component';
 import { RegisterComponent } from './Component/register/register.component';
 import { ManageUsersComponent } from './Component/manage-users/manage-users.component';
 import { ErrorsHandlerService } from './service/Exceptions/errors-handler.service';
-import { ManageAudioComponent } from './Component/manage-audio/manage-audio.component';
+import { ManageMediaComponent } from './Component/manage-media/manage-media.component';
 
 @NgModule({
   declarations: [
@@ -22,14 +22,14 @@ import { ManageAudioComponent } from './Component/manage-audio/manage-audio.comp
     FooterComponent,
     RegisterComponent,
     ManageUsersComponent,
-    ManageAudioComponent
+    ManageMediaComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, HttpClientModule, ReactiveFormsModule
   ],
-  providers: [ {provide : ErrorHandler, useClass: ErrorsHandlerService}],
+  providers: [{ provide: ErrorHandler, useClass: ErrorsHandlerService }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

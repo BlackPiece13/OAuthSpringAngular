@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.dmr.com.dmr.exceptions.UserAlreadyExistsException;
 import com.dmr.dto.UserDTO;
 import com.dmr.model.User;
 import com.dmr.service.UserService;
@@ -20,11 +21,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-/*
-@Resource(name = "defaultTokenServices")
-ConsumerTokenServices tokenServices;
-*/
 
     @RequestMapping(value = "/user", method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> getUser(@RequestParam String email) {
@@ -75,13 +71,11 @@ ConsumerTokenServices tokenServices;
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> addUser(@RequestBody User user) {
-        ObjectMapper mapper = new ObjectMapper();
-        ResponseEntity<UserDTO> resp;
-        Optional<User>  foundUser = userService.findByEmail(user.getEmail());
-        if (foundUser.isPresent()) {
+        try {
+            UserDTO userDTO = userService.getUserDTO(userService.add(user).get());
+            return new ResponseEntity(userDTO, HttpStatus.OK);
+        } catch (UserAlreadyExistsException e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        UserDTO userDTO = userService.getUserDTO(userService.add(user).get());
-        return new ResponseEntity(userDTO, HttpStatus.OK);
     }
 }

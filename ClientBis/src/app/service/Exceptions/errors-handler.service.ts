@@ -17,15 +17,15 @@ export class ErrorsHandlerService implements ErrorHandler {
     }
     //throw error;
   }
-
-  lastUpdate = new Promise((resolve, reject) => {
-    const date = new Date();
-    resolve(date);
-    setTimeout(
-      () => { }
-      , 2000
-    );
-  });
+  /*
+    lastUpdate = new Promise((resolve, reject) => {
+      const date = new Date();
+      resolve(date);
+      setTimeout(
+        () => { }
+        , 2000
+      );
+    });*/
 
   public get router() {
     return this.injector.get(Router);

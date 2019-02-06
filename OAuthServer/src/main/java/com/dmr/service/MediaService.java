@@ -7,11 +7,9 @@ import com.dmr.repo.MediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class MediaService {
@@ -20,6 +18,10 @@ public class MediaService {
 
     public List<Media> getAudiosList() {
         return mediaRepo.findFirst10ByTypeOrderByIdDesc(MediaType.AUDIO);
+    }
+
+    public List<Media> getVideosList() {
+        return mediaRepo.findFirst10ByTypeOrderByIdDesc(MediaType.VIDEO);
     }
 
     public Optional<Media> findByID(Long id) {
@@ -38,14 +40,17 @@ public class MediaService {
         mediaRepo.delete(media);
     }
 
-    public void add(Media media) throws AlreadyExistsMediaException {
+    public Media add(Media media) throws AlreadyExistsMediaException {
         if (mediaRepo.findByUrlAndType(media.getUrl(), media.getType()).isPresent()) {
             throw new AlreadyExistsMediaException("Media already exists");
         }
-        mediaRepo.save(media);
+        media.setCreationDate(LocalDateTime.now());
+        return mediaRepo.save(media);
     }
 
-    public void update(Media media) {
-        mediaRepo.save(media);
-    }
-}
+    public Media update(Media media)
+{
+        media.setUpdateDate(LocalDateTime.now());
+        return mediaRepo.save(media);
+        }
+        }

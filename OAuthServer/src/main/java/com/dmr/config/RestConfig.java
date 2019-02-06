@@ -27,8 +27,8 @@ public class RestConfig implements Filter {
             throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE");
         response.setHeader("Access-Control-Max-Age", "36000");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, content-type");
 

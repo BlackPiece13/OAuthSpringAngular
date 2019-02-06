@@ -1,11 +1,11 @@
 export class Media {
-    id: number;
+    id: string;
     url: string;
     type: string;
-    dateCreation: string;
+    creationDate: string;
     updateDate: string;
     description: string;
-    viewsNumber: number;
+    viewsNumber: string;
     content: string;
     /*
         private _id: number;
@@ -48,3 +48,5 @@ export class Media {
                 
             }*/
 }
+
+

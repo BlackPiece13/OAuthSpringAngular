@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -28,8 +29,8 @@ public class Media {
     @Lob
     private String content;
 
-    private Date date;
-    private Date updateDate;
+    private LocalDateTime CreationDate;
+    private LocalDateTime updateDate;
 
     @Column(name = "VIEWS", columnDefinition = "Decimal(7,0) default '0'")
     private Long viewsNumber;

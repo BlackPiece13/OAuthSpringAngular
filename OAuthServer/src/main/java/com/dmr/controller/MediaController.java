@@ -21,9 +21,15 @@ public class MediaController {
     private MediaService mediaService;
 
     @RequestMapping(value = "/top10Audios", method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Media>> getTop10Medias() {
-        List<Media> mediasList = mediaService.getAudiosList();
-        return new ResponseEntity(mediasList, HttpStatus.OK);
+    public ResponseEntity<List<Media>> getTop10Audios() {
+        List<Media> audiosList = mediaService.getAudiosList();
+        return new ResponseEntity(audiosList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/top10Videos", method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Media>> getTop10Videos() {
+        List<Media> videosList = mediaService.getVideosList();
+        return new ResponseEntity(videosList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/allMedias", method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -34,16 +40,17 @@ public class MediaController {
 
     @RequestMapping(value = "/media", method = RequestMethod.POST)
     public ResponseEntity addMedia(@RequestBody Media media) {
+        System.out.println("POST media : " + media);
         try {
-            mediaService.add(media);
-            return new ResponseEntity(HttpStatus.OK);
+            Media addedMedia = mediaService.add(media);
+            return new ResponseEntity(addedMedia, HttpStatus.OK);
         } catch (AlreadyExistsMediaException e) {
             e.printStackTrace();
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @RequestMapping(value = "/media/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/media/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteMedia(@PathVariable("id") Long id) {
         try {
             mediaService.deleteByID(id);
@@ -54,14 +61,26 @@ public class MediaController {
         }
     }
 
-    @RequestMapping(value = "/media", method = RequestMethod.PUT)
-    public ResponseEntity updateMedia(@RequestBody Media media) {
+    @RequestMapping(value = "/media/{id}", method = RequestMethod.GET)
+    public ResponseEntity getMedia(@PathVariable("id") Long id) {
         try {
-            mediaService.update(media);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity(mediaService.findByID(id), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @RequestMapping(value = "/media", method = RequestMethod.PUT)
+    public ResponseEntity updateMedia(@RequestBody Media media) {
+        try {
+            Media updatedMedia = mediaService.update(media);
+            return new ResponseEntity(updatedMedia, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
 }

@@ -1,7 +1,7 @@
 <div class="row justify-content-end manage-users-row">
     <div class="add-button">
         <button type="button" class="btn btn-primary" (click)="resetForm()" data-toggle="modal" data-target="#addPersonModal"><span
-            class="oi oi-plus"></span></button>
+                class="oi oi-plus"></span></button>
     </div>
     <table class="table">
         <thead>
@@ -25,7 +25,7 @@
                 <td>{{user.gender}}</td>
                 <td>
                     <button type="button" class="btn btn-primary"><span class="oi oi-pencil" data-target="#addPersonModal"
-            data-toggle="modal" (click)="initForm(user.id)"></span></button>
+                            data-toggle="modal" (click)="initForm(user.id)"></span></button>
                     <button type="button" class="btn btn-danger" (click)="deleteUser(user.id)"><span class="oi oi-x "></span></button>
                 </td>
             </tr>
@@ -34,14 +34,15 @@
 
     <!-- Modal -->
 
-    <div class="modal fade" id="addPersonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addPersonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="col-sm-12 offset-md-3 col-md-6">
@@ -55,7 +56,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="firstname">First Name:</label>
-                                <input type="text" [ngClass]="{'form-control':true, 'is-invalid' : (firstname.invalid && firstname.touched)}" formControlName="firstname" id="firstname" name="firstname" />
+                                <input type="text" [ngClass]="{'form-control':true, 'is-invalid' : (firstname.invalid && firstname.touched)}"
+                                    formControlName="firstname" id="firstname" name="firstname" />
                             </div>
                             <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
                                 <div *ngIf="firstname.errors.minlength">
@@ -65,7 +67,8 @@
 
                             <div class="form-group">
                                 <label for="lastname">Last Name:</label>
-                                <input type="text" placeholder="Last Name" [ngClass]="{'form-control':true, 'is-invalid' : (lastname.invalid && lastname.touched)}" id="lastName" name="lastname" formControlName="lastname" />
+                                <input type="text" placeholder="Last Name" [ngClass]="{'form-control':true, 'is-invalid' : (lastname.invalid && lastname.touched)}"
+                                    id="lastName" name="lastname" formControlName="lastname" />
                             </div>
                             <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
                                 <div *ngIf="lastname.errors.minlength">
@@ -75,7 +78,8 @@
 
                             <div class="form-group">
                                 <label for="login">Login:</label>
-                                <input type="text" class="form-control" id="login" name="login" formControlName="login" [ngClass]="{'form-control':true, 'is-invalid' : (login.invalid && login.touched)}" />
+                                <input type="text" class="form-control" id="login" name="login" formControlName="login"
+                                    [ngClass]="{'form-control':true, 'is-invalid' : (login.invalid && login.touched)}" />
                             </div>
                             <div *ngIf="login.invalid && (login.dirty || login.touched)">
                                 <div *ngIf="login.errors.minlength">
@@ -85,10 +89,12 @@
                             <div *ngIf="isSaveForm">
                                 <div class="form-group">
                                     <label for="password">Password:</label>
-                                    <input type="password" class="form-control" id="password" name="password" formControlName="password" [ngClass]="{'form-control':true, 'is-invalid' : (password.invalid && password.touched)}" />
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        formControlName="password" [ngClass]="{'form-control':true, 'is-invalid' : (password.invalid && password.touched)}" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" id="passwordBis" name="passwordBis" formControlName="passwordBis" [attr.disabled]=" password.invalid ? true : null" />
+                                    <input type="password" class="form-control" id="passwordBis" name="passwordBis"
+                                        formControlName="passwordBis" [attr.disabled]=" password.invalid ? true : null" />
                                 </div>
                                 <div *ngIf="(passwordBis.invalid && (passwordBis.dirty || passwordBis.touched)) ||
                     (password.invalid && (password.dirty || password.touched))">
@@ -104,23 +110,24 @@
                             <div class="form-group">
                                 <label for="role">Role:</label>
                                 <select class="form-control" formControlName="role" [ngClass]="{'form-control':true, 'is-invalid' : (role.invalid && role.touched)}">
-                <option value="SIMPLE_USER">Simple User</option>
-                <option value="MODERATOR">Moderator</option>
-                <option value="ADMIN">Admin</option>
-              </select>
+                                    <option value="SIMPLE_USER">Simple User</option>
+                                    <option value="MODERATOR">Moderator</option>
+                                    <option value="ADMIN">Admin</option>
+                                </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="gender">Sexe:</label>
                                 <select class="form-control" formControlName="gender" [ngClass]="{'form-control':true, 'is-invalid' : (gender.invalid && gender.touched)}">
-                <option value="MALE">Homme</option>
-                <option value="FEMALE">Femme</option>
-              </select>
+                                    <option value="MALE">Homme</option>
+                                    <option value="FEMALE">Femme</option>
+                                </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="text" class="form-control" id="email" name="email" formControlName="email" [ngClass]="{'form-control':true, 'is-invalid' : (email.invalid && email.touched)}" />
+                                <input type="text" class="form-control" id="email" name="email" formControlName="email"
+                                    [ngClass]="{'form-control':true, 'is-invalid' : (email.invalid && email.touched)}" />
                             </div>
                             <div *ngIf="email.invalid && (email.dirty || email.touched)">
                                 <div *ngIf="email.errors.email">

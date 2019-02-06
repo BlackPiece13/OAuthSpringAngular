@@ -49,11 +49,13 @@ export class ManageUsersComponent implements OnInit {
   }
 
   deleteUser(id: number) {
-    const index: number = this.usersList.indexOf(this.usersList.find(x => x.id == id));
-    if (index !== -1) {
-      this.usersList.splice(index, 1);
-    }
-    this.userService.delete(id).subscribe(res => { console.log("delete success") });
+    this.userService.delete(id).subscribe(() => {
+      const index: number = this.usersList.indexOf(this.usersList.find(x => x.id == id));
+      if (index !== -1) {
+        this.usersList.splice(index, 1);
+      }
+      console.log("delete success");
+    });
   }
 
   passwordsMatch: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
@@ -66,9 +68,9 @@ export class ManageUsersComponent implements OnInit {
     if (!this.formGroup.get("firstname").errors && !this.formGroup.get("lastname").errors &&
       !this.formGroup.get("login").errors && !this.formGroup.get("email").errors && !this.formGroup.get("gender").errors) {
 
-      this._credentials.firstname = this.formGroup.get("firstname").value
-      this._credentials.lastname = this.formGroup.get("lastname").value
-      this._credentials.login = this.formGroup.get("login").value
+      this._credentials.firstname = this.formGroup.get("firstname").value;
+      this._credentials.lastname = this.formGroup.get("lastname").value;
+      this._credentials.login = this.formGroup.get("login").value;
       this._credentials.email = this.formGroup.get("email").value;
       this._credentials.role = this.formGroup.get("role").value;
       this._credentials.gender = this.formGroup.get("gender").value;

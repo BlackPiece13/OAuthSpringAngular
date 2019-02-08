@@ -1,11 +1,10 @@
 .footer {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      /*position: relative;*/
       height: 65px;
+      margin: 0;
       background: #77c9b4;
       align-items: center;
+      
 }
 
 p {

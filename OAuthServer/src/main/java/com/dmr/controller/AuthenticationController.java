@@ -20,7 +20,6 @@ import com.dmr.service.UserService;
 
 @RestController
 public class AuthenticationController {
-
     @Autowired
     private UserService userService;
 

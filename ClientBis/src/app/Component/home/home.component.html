@@ -8,3 +8,16 @@
         </div>
     </div>
 </div>
+
+<div class="cards-content">
+    <div *ngFor="let video of videosList">
+        <div class="card">
+            <img class="card-img-top" src="https://via.placeholder.com/60x150.png" alt="Card image cap">
+            <div class="card-body">
+                <a href="#">
+                    <h5 class="card-title">{{video.title}}</h5>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

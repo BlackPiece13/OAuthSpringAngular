@@ -48,9 +48,8 @@ public class MediaService {
         return mediaRepo.save(media);
     }
 
-    public Media update(Media media)
-{
+    public Media update(Media media) {
         media.setUpdateDate(LocalDateTime.now());
         return mediaRepo.save(media);
-        }
-        }
+    }
+}

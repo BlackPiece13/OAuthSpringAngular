@@ -1,0 +1,10 @@
+.cards-content {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 20rem;
+}
+
+.cards-content .card {
+    height: 20rem;
+    width:12rem;
+}

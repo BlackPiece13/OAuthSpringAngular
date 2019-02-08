@@ -1,19 +1,13 @@
 package com.dmr.config;
 
-import java.io.IOException;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -47,19 +41,5 @@ public class RestConfig implements Filter {
     @Override
     public void destroy() {
     }
-}
 
-/*
- * @Configuration public class RestConfig {
- *
- * @Bean
- *
- * @Primary public CorsFilter corsFilter() { UrlBasedCorsConfigurationSource
- * source = new UrlBasedCorsConfigurationSource(); CorsConfiguration config =
- * new CorsConfiguration(); //config.setAllowCredentials(false);
- * config.addAllowedOrigin("*"); //config.addAllowedHeader("*");
- * //config.addAllowedMethod("OPTIONS"); //config.addAllowedMethod("GET");
- * config.addAllowedMethod("POST"); //config.addAllowedMethod("PUT");
- * //config.addAllowedMethod("DELETE"); source.registerCorsConfiguration("/**",
- * config); return new CorsFilter(source); } }
- */
+}

@@ -1,5 +1,6 @@
 export class Media {
     id: string;
+    title :string
     url: string;
     type: string;
     creationDate: string;

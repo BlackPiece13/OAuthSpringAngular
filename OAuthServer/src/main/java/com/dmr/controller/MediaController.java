@@ -2,10 +2,8 @@ package com.dmr.controller;
 
 import com.dmr.com.dmr.exceptions.AlreadyExistsMediaException;
 import com.dmr.model.Media;
-import com.dmr.model.User;
 import com.dmr.service.MediaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
@@ -29,6 +27,7 @@ public class MediaController {
     @RequestMapping(value = "/top10Videos", method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Media>> getTop10Videos() {
         List<Media> videosList = mediaService.getVideosList();
+        System.
         return new ResponseEntity(videosList, HttpStatus.OK);
     }
 
@@ -81,6 +80,4 @@ public class MediaController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
-
-
 }

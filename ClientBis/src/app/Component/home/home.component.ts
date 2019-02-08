@@ -14,13 +14,13 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.mediaService.getAudiosList().subscribe(data => { this._audiosList = <Array<Media>>data });
-    this.mediaService.getVideosList().subscribe(data => { this._videosList = <Array<Media>>data });
+    this.mediaService.getVideosList().subscribe(data => { console.log(data); this._videosList = <Array<Media>>data });
   }
 
   get audiosList() {
     return this._audiosList;
   }
   get videosList() {
-    return this.videosList;
+    return this._videosList;
   }
 }

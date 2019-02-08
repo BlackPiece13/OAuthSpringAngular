@@ -1,93 +1,99 @@
-<div class="row justify-content-end manage-users-row">
-    <div class="add-button">
-        <button type="button" class="btn btn-primary" (click)="resetForm()" data-toggle="modal" data-target="#addMediaModal"><span
-                class="oi oi-plus"></span></button>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <td scope="col">Titre</td>
-                <th scope="col">TYPE</th>
-                <th scope="col">Date Creation</th>
-                <th scope="col">Date MAJ</th>
-                <th scope="col">Taille</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let media of mediasList">
-                <td scope="row">{{media.id}}</td>
-                <td>{{media.title}}</td>
-                <td>{{media.type}}</td>
-                <td>{{media.creationDate}}</td>
-                <td>{{media.updateDate}}</td>
-                <td></td>
-                <td>
-                    <button type="button" class="btn btn-primary"><span class="oi oi-pencil" data-target="#addMediaModal"
-                            data-toggle="modal" (click)="initForm(media.id)"></span></button>
-                    <button type="button" class="btn btn-danger" (click)="deleteMedia(media.id)"><span class="oi oi-x ">
+<div class="add-button">
+    <button type="button" class="btn btn-primary" (click)="resetForm()" data-toggle="modal" data-target="#addMediaModal"><span
+            class="oi oi-plus"></span></button>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titre</th>
+            <th scope="col">TYPE</th>
+            <th scope="col">Date Creation</th>
+            <th scope="col">Date MAJ</th>
+            <th scope="col">Taille</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let media of mediasList">
+            <td scope="row">{{media.id}}</td>
+            <td>{{media.title}}</td>
+            <td>{{media.type}}</td>
+            <td>{{media.creationDate}}</td>
+            <td>{{media.updateDate}}</td>
+            <td></td>
+            <td>
+                <button type="button" class="btn btn-primary"><span class="oi oi-pencil" data-target="#addMediaModal"
+                        data-toggle="modal" (click)="initForm(media.id)"></span></button>
+                <button type="button" class="btn btn-danger" (click)="deleteMedia(media.id)"><span class="oi oi-x ">
 
-                        </span></button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    </span></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-    <!-- Modal -->
-    <div class="modal fade" id="addMediaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Gestion des Medias :</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="col-sm-12 offset-md-3 col-md-6">
-                        <form [formGroup]="mediaFormGroup" (ngSubmit)="addOrUpdate()" id="manageMediaForm">
-                            <div *ngIf="responseStatus=='OK'">
-                                <p class="text-success">Success</p>
+<!-- Modal -->
+<div class="modal fade" id="addMediaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gestion des Medias :</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-12 offset-md-3 col-md-6">
+                    <form [formGroup]="mediaFormGroup" (ngSubmit)="addOrUpdate()" id="manageMediaForm">
+                        <div *ngIf="responseStatus=='OK'">
+                            <p class="text-success">Success</p>
 
-                            </div>
-                            <div *ngIf="responseStatus=='ERROR'">
-                                <p class="text-danger">Erreur</p>
-                            </div>
-                            <div class="form-group">
-                                <label for="firstname">URL:</label>
-                                <input type="text" [ngClass]="{'form-control':true, 'is-invalid' : (url.invalid && url.touched)}"
-                                    formControlName="url" id="url" name="url" />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="description">Description:</label>
-                                <input type="text" class="form-control" id="description" name="description"
-                                    formControlName="description" [ngClass]="{'form-control':true, 'is-invalid' : (description.invalid && description.touched)}" />
-                            </div>
-                            <div *ngIf="description.invalid && (description.dirty || description.touched)">
-                                <div *ngIf="description.errors.minlength">
-                                    <p class="error text-danger">Minimum 4 caractères.</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="type">Type:</label>
-                                <select class="form-control" formControlName="type" [ngClass]="{'form-control':true, 'is-invalid' : (type.invalid && type.touched)}">
-                                    <option value="ARTICLE">Article</option>
-                                    <option value="AUDIO">Audio</option>
-                                    <option value="VIDEO">Video</option>
-                                </select>
-                            </div>
-
-                        </form>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeModal>Close</button>
-                            <button type="submit" class="btn btn-primary" form="manageMediaForm">Enregesitrer</button>
                         </div>
+
+                        <div *ngIf="responseStatus=='ERROR'">
+                            <p class="text-danger">Erreur</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="title">Titre:</label>
+                            <input type="text" [ngClass]="{'form-control':true, 'is-invalid' : (title.invalid && title.touched)}"
+                                formControlName="title" id="title" name="title" />
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="firstname">URL:</label>
+                            <input type="text" [ngClass]="{'form-control':true, 'is-invalid' : (url.invalid && url.touched)}"
+                                formControlName="url" id="url" name="url" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <input type="text" class="form-control" id="description" name="description" formControlName="description"
+                                [ngClass]="{'form-control':true, 'is-invalid' : (description.invalid && description.touched)}" />
+                        </div>
+                        <div *ngIf="description.invalid && (description.dirty || description.touched)">
+                            <div *ngIf="description.errors.minlength">
+                                <p class="error text-danger">Minimum 4 caractères.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="type">Type:</label>
+                            <select class="form-control" formControlName="type" [ngClass]="{'form-control':true, 'is-invalid' : (type.invalid && type.touched)}">
+                                <option value="ARTICLE">Article</option>
+                                <option value="AUDIO">Audio</option>
+                                <option value="VIDEO">Video</option>
+                            </select>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeModal>Close</button>
+                        <button type="submit" class="btn btn-primary" form="manageMediaForm">Enregesitrer</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>

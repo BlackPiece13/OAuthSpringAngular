@@ -20,6 +20,7 @@ export class ManageMediaComponent implements OnInit {
     this.mediaService.getMediasList().subscribe(data => { this._mediasList = <Array<Media>>data });
     this.mediaCredentials = new Media();
     this.mediaFormGroup = new FormGroup({
+      "title": new FormControl(this.mediaCredentials.title, Validators.required),
       "url": new FormControl(this.mediaCredentials.url, Validators.required),
       "type": new FormControl(this.mediaCredentials.type, Validators.required),
       "description": new FormControl(this.mediaCredentials.description, Validators.required)
@@ -27,6 +28,7 @@ export class ManageMediaComponent implements OnInit {
   }
   addOrUpdate() {
     console.log("addOrUpdate");
+    this.mediaCredentials.title = this.mediaFormGroup.get("title").value;
     this.mediaCredentials.type = this.mediaFormGroup.get('type').value;
     this.mediaCredentials.url = this.mediaFormGroup.get('url').value;
     this.mediaCredentials.description = this.mediaFormGroup.get('description').value;
@@ -64,6 +66,7 @@ export class ManageMediaComponent implements OnInit {
     this.mediaService.getMedia(id).subscribe(data => {
       this.mediaCredentials = <Media>data; console.log(data);
       this.mediaFormGroup.setValue({
+        title: this.mediaCredentials.title,
         type: this.mediaCredentials.type, url: this.mediaCredentials.url,
         description: this.mediaCredentials.description
       })
@@ -71,16 +74,12 @@ export class ManageMediaComponent implements OnInit {
   }
 
   resetForm() {
-    this.mediaFormGroup.setValue({ url: '', type: '', description: '' });
     this.isSaveForm = true;
-    this.mediaCredentials.id = '';
-    this.mediaCredentials.url = '';
-    this.mediaCredentials.type = '';
-    this.mediaCredentials.creationDate = '';
-    this.mediaCredentials.updateDate = '';
-    this.mediaCredentials.content = '';
-    this.mediaCredentials.description = '';
-    this.mediaCredentials.viewsNumber = '';
+    this.mediaCredentials = {
+      id: '', title: '', url: '', type: '', creationDate: '', updateDate: '', content: '', description: '',
+      viewsNumber: ''
+    };
+    this.mediaFormGroup.setValue({ title: '', url: '', type: '', description: '' });
   }
 
   get mediasList() {
@@ -96,5 +95,8 @@ export class ManageMediaComponent implements OnInit {
 
   get description() {
     return this.mediaFormGroup.get('description');
+  }
+  get title() {
+    return this.mediaFormGroup.get("title");
   }
 }
